@@ -35,7 +35,7 @@ def main(args, outs):
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
 
-    freebayes_args = ['freebayes', '-f', genome_fasta_path, '-b', args.input, '-0', '-t', bed_path]
+    freebayes_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', args.input, '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path]
 
     with open(outs.output, 'w') as f:
         subprocess.check_call(freebayes_args, stdout=f)
