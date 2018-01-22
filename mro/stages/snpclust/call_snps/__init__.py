@@ -42,7 +42,7 @@ def main(args, outs):
     first_bam = martian.make_path('output.RG.bam')
     second_bam = martian.make_path('output.RG.STARcor.bam')
     rg_make_args = ['gatk-launch', 'AddOrReplaceReadGroups', '-I', args.input, '-O', 
-                    local_bam, '-LB', 'lib1', '-PL', 'illumina',
+                    first_bam, '-LB', 'lib1', '-PL', 'illumina',
                     '-PU', 'unit1', '-SM', 'example']
     subprocess.check_call(rg_make_args)
     
