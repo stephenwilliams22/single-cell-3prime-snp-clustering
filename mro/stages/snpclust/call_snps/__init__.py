@@ -34,11 +34,30 @@ def main(args, outs):
     bed_path = martian.make_path('region.bed')
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
-
-    freebayes_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', args.input, '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path]
+    
+    dic_make_args = ['gatk-launch', 'CreateSequenceDictionary', '-R', genome_fasta_path]
+    subprocess.check_call(dic_make_args)
+    
+    
+    first_bam = martian.make_path('output.RG.bam')
+    second_bam = martian.make_path('output.RG.STARcor.bam')
+    rg_make_args = ['gatk-launch', 'AddOrReplaceReadGroups', '-I', args.input, '-O', 
+                    local_bam, '-LB', 'lib1', '-PL', 'illumina',
+                    '-PU', 'unit1', '-SM', 'example']
+    subprocess.check_call(rg_make_args)
+    
+    samtools_args = '''samtools view -@ 4 -h {} | 
+                       awk 'BEGIN{{OFS="\t"}} $5 == 255 {{ $5 = 60; print; next}} {{print}}' | 
+                       samtools view -Sb -@ 4 - > {}'''.format(first_bam, second_bam)
+    subprocess.call(samtools_args, shell=True)            
+    
+    samtools_index_args = ['samtools', 'index',second_bam]
+    subprocess.call(samtools_index_args)
+    
+    gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path]
 
     with open(outs.output, 'w') as f:
-        subprocess.check_call(freebayes_args, stdout=f)
+        subprocess.check_call(gatk_args, stdout=f)
 
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
