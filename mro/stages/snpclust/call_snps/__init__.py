@@ -56,7 +56,7 @@ def main(args, outs):
     
     gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path]
 
-    os.remove first_bam
+    #os.remove first_bam
     
     with open(outs.output, 'w') as f:
         subprocess.check_call(gatk_args, stdout=f)
