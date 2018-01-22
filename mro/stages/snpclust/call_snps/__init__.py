@@ -35,7 +35,8 @@ def main(args, outs):
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
     
-    dic_make_args = ['gatk-launch', 'CreateSequenceDictionary', '-R', genome_fasta_path]
+    dic_make_args = ['java', '-jar', '/mnt/home/stephen/miniconda2/share/gatk4-4.0.0.0-0/gatk-package-4.0.0.0-local.jar',
+                     'CreateSequenceDictionary', '-R', genome_fasta_path]
     subprocess.check_call(dic_make_args)
     
     
