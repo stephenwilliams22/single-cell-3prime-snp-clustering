@@ -39,7 +39,7 @@ pipeline SNP_CLUSTERER(
         reference_path = self.reference_path,
         n_donors       = 2,
         input          = FILTER_READS.output,
-        bed_file       = SNP_CLUSTERER.bed_file,
+        bed_file       = self.bed_file,
     )
 
     call COUNT_ALLELES(
