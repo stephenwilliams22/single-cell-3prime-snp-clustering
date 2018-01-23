@@ -26,6 +26,7 @@ pipeline SNP_CLUSTERER(
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
+    in  path    bed_file,
 )
 {
     call FILTER_READS(
@@ -38,6 +39,7 @@ pipeline SNP_CLUSTERER(
         reference_path = self.reference_path,
         n_donors       = 2,
         input          = FILTER_READS.output,
+        bed_file       = SNP_CLUSTERER.bed_file,
     )
 
     call COUNT_ALLELES(
