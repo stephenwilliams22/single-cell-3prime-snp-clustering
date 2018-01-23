@@ -20,13 +20,13 @@ pipeline SNP_CLUSTERER(
     in  int   min_depth                          "Minimum depth to use a locus",
     in  float min_posterior                      "Per-cell probability threshold",
     in  json  cluster_ground_truth,
+    in  path  bed_file,
     out h5    raw_allele_bc_matrices_h5,
     out path  raw_allele_bc_matrices_mex,
     out h5    likelihood_allele_bc_matrices_h5,
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
-    in  path    bed_file,
 )
 {
     call FILTER_READS(
