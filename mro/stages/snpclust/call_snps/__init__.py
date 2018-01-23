@@ -16,23 +16,26 @@ stage CALL_SNPS(
     in  int    n_donors,
     out vcf[]  output,
     src py     "stages/snpclust/call_snps_pd",
+    in  path    bed_file,
 ) split using (
     in  string locus,
 )
 '''
 
 def split(args):
-    in_bam = tk_bam.create_bam_infile(args.input)
+    #in_bam = tk_bam.create_bam_infile(args.input)
     #define a specific region to investigate
-    loci = ["1:0..40000000"]
+    #loci = ["1:0..40000000"]
     #loci = tk_bam.generate_tiling_windows(in_bam, tk_constants.PARALLEL_LOCUS_SIZE)
+    loci = [x.split() for x in open(args.bed_file)]
     chunks = [{'locus': locus} for locus in loci]
     return {'chunks': chunks}
 
 def main(args, outs):
     genome_fasta_path = cr_utils.get_reference_genome_fasta(args.reference_path)
 
-    chrom, start, stop = tk_io.get_locus_info(args.locus)
+    #chrom, start, stop = tk_io.get_locus_info(args.locus)
+    chrom, start, stop = args.locus
     bed_path = martian.make_path('region.bed')
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
