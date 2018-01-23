@@ -60,7 +60,7 @@ def main(args, outs):
     #os.remove first_bam
     
     with open(outs.output, 'w') as f:
-        subprocess.check_call(gatk_args, stdout=f)
+        subprocess.call(gatk_args, stdout=f)
 
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
