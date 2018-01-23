@@ -23,7 +23,9 @@ stage CALL_SNPS(
 
 def split(args):
     in_bam = tk_bam.create_bam_infile(args.input)
-    loci = tk_bam.generate_tiling_windows(in_bam, tk_constants.PARALLEL_LOCUS_SIZE)
+    #define a specific region to investigate
+    loci = ["1:0..40000000"]
+    #loci = tk_bam.generate_tiling_windows(in_bam, tk_constants.PARALLEL_LOCUS_SIZE)
     chunks = [{'locus': locus} for locus in loci]
     return {'chunks': chunks}
 
