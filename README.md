@@ -54,6 +54,7 @@ call SNP_CLUSTERER_CS(
     reference_path       = "/opt/10x/refdata-cellranger-hg19-1.2.0",
     possorted_genome_bam = "/opt/10x/example.bam",
     cell_barcodes        = "/opt/10x/example_barcodes.tsv",
+    bed_file             = "/opt/10x/file.bed",
     align                = {"high_conf_mapq":255},
     min_snp_call_qual    = 0,
     min_bcs_per_snp      = 2,
