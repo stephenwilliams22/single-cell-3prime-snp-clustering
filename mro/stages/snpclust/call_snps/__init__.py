@@ -55,7 +55,7 @@ def main(args, outs):
     subprocess.call(samtools_index_args)
     
     gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, 
-                 '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','/dev/stdout']
+                 '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
 
     #os.remove first_bam
     
