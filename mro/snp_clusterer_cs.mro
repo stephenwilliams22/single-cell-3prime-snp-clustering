@@ -26,6 +26,7 @@ pipeline SNP_CLUSTERER_CS(
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
+    in  path    bed_file,
 )
 {
     call SNP_CLUSTERER(
@@ -45,6 +46,7 @@ pipeline SNP_CLUSTERER_CS(
         min_depth            = self.min_depth,
         min_posterior        = self.min_posterior,
         cluster_ground_truth = self.cluster_ground_truth,
+        bed_file             = self.bed_file,
     )
 
     return (
