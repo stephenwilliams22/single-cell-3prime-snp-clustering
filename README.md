@@ -1,6 +1,5 @@
 # Single Cell 3' RNA SNP Clustering Pipeline (`snpclust`)
 
-
 Using single cell RNA-sequencing data produced by the 10x Genomics Chromium Single Cell 3' Solution, cluster cells into two groups by their single nucleotide polymorphisms (SNPs). The pipeline takes as input a BAM file and barcode list produced by Cell Ranger and produces cluster calls for each cell.
 
 **While this software was used to analyze the donor-host single cell RNA-seq data in AML patients, this software has not been extensively tested on other sample types or applications. This software is not supported by 10x Genomics.**
