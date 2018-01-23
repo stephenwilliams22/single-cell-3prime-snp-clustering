@@ -58,7 +58,7 @@ def main(args, outs):
                  '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
     
     #modify the GATK vcf to remove header issues
-    sed_args = '''sed '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
+    sed_args = '''sed -i '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
     subprocess.call(sed_args, shel=True)
     
     #os.remove first_bam
