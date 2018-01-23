@@ -34,7 +34,7 @@ def split(args):
 def main(args, outs):
     genome_fasta_path = cr_utils.get_reference_genome_fasta(args.reference_path)
     
-    assert False, args.locus
+    #assert False, args.locus
 
     #chrom, start, stop = tk_io.get_locus_info(args.locus)
     chrom, start, stop = args.locus
