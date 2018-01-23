@@ -36,7 +36,7 @@ def main(args, outs):
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
     
     dic_make_args = ['gatk-launch', 'CreateSequenceDictionary', '-R', genome_fasta_path]
-    subprocess.check_call(dic_make_args)
+    subprocess.call(dic_make_args)
     
     
     first_bam = martian.make_path('output.RG.bam')
