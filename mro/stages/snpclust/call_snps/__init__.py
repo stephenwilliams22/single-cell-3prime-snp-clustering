@@ -51,9 +51,10 @@ def main(args, outs):
                     '-PU', 'unit1', '-SM', 'example']
     subprocess.check_call(rg_make_args)
     
-    samtools_args = '''samtools view -@ 4 -h {} | 
+    #this corrects the STAR mapq annotation. Uses 8 threads.
+    samtools_args = '''samtools view -@ 8 -h {} | 
                        awk 'BEGIN{{OFS="\t"}} $5 == 255 {{ $5 = 60; print; next}} {{print}}' | 
-                       samtools view -Sb -@ 4 - > {}'''.format(first_bam, second_bam)
+                       samtools view -Sb -@ 8 - > {}'''.format(first_bam, second_bam)
     subprocess.call(samtools_args, shell=True)            
     
     samtools_index_args = ['samtools', 'index',second_bam]
