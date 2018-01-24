@@ -12,6 +12,7 @@ Same as [Cell Ranger system requirements](https://support.10xgenomics.com/single
 ## Dependencies
 - [Ranger (v1.0.1 ONLY - newer versions may not work)](https://support.10xgenomics.com/developers/software)
 - [Cell Ranger reference data package](https://support.10xgenomics.com/single-cell/software/downloads/latest)
+- [GATK4](https://bioconda.github.io/recipes/gatk4/README.html)
 
 ## Install
 1. Install Ranger
@@ -45,6 +46,7 @@ The following arguments are paths to your inputs:
 - `reference_path` (path to 10x refdata)
 - `possorted_genome_bam` (the BAM file produced by Cell Ranger)
 - `cell_barcodes` (a text file containing cell-barcodes that were called as cells by Cell Ranger; one barcode per line)
+- `bed_file` (a bed file with your regions of interest)
 
 /opt/10x/example.mro:
 ```
