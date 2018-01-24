@@ -54,7 +54,6 @@ call SNP_CLUSTERER_CS(
     reference_path       = "/opt/10x/refdata-cellranger-hg19-1.2.0",
     possorted_genome_bam = "/opt/10x/example.bam",
     cell_barcodes        = "/opt/10x/example_barcodes.tsv",
-    bed_file             = "/opt/10x/file.bed",
     align                = {"high_conf_mapq":255},
     min_snp_call_qual    = 0,
     min_bcs_per_snp      = 2,
@@ -75,7 +74,7 @@ call SNP_CLUSTERER_CS(
 ```
 # Assuming ranger was extracted to /opt/10x/ranger-1.0.1
 # and this repo was cloned to /opt/10x/cellranger-snpclust-src-1.0.0
-export PATH=/opt/10x/ranger-1.0.1:/path/to/gatk4/gatk-launch directory/:$PATH
+export PATH=/opt/10x/ranger-1.0.1:/opt/10x/ranger-1.0.1/freebayes/v1.0.2:$PATH
 export MROPATH=/opt/10x/cellranger-snpclust-src-1.0.0/mro:$MROPATH
 export PYTHONPATH=/opt/10x/cellranger-snpclust-src-1.0.0/lib/python/:/opt/10x/ranger-1.0.1/ranger-cs/1.0.1/tenkit/lib/python:$PYTHONPATH
 ranger mrp example.mro example
