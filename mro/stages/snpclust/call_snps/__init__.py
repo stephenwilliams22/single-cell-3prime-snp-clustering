@@ -72,7 +72,7 @@ def main(args, outs):
     sed_args = '''sed -i '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
     subprocess.call(sed_args, shell=True)
     
-    os.remove(second_bam)
+    #os.remove(second_bam)
     
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
