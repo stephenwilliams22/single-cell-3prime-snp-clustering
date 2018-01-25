@@ -8,6 +8,7 @@ import tenkit.bam as tk_bam
 import tenkit.bio_io as tk_io
 import tenkit.constants as tk_constants
 import cellranger.utils as cr_utils
+import os
 
 __MRO__ = '''
 stage CALL_SNPS(
