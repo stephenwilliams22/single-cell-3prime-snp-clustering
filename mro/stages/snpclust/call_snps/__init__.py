@@ -62,10 +62,8 @@ def main(args, outs):
     
     gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, 
                  '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
-    
-    
-    
-    #os.remove first_bam
+        
+    os.remove(first_bam)
     
     with open(outs.output, 'w') as f:
         subprocess.call(gatk_args, stdout=f)
@@ -73,6 +71,8 @@ def main(args, outs):
     #modify the GATK vcf to remove header issues
     sed_args = '''sed -i '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
     subprocess.call(sed_args, shell=True)
+    
+    os.remove(second_bam)
     
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
