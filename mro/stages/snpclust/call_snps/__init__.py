@@ -66,8 +66,7 @@ def main(args, outs):
         
     os.remove(first_bam)
     
-    with open(outs.output, 'w') as f:
-        subprocess.call(gatk_args, stdout=f)
+    subprocess.check_call(gatk_args)
     
     #modify the GATK vcf to remove header issues
     sed_args = '''sed -i '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
