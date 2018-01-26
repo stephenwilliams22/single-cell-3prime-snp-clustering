@@ -49,7 +49,7 @@ def main(args, outs):
     second_bam = martian.make_path('output.RG.STARcor.bam')
     rg_make_args = ['gatk-launch', 'AddOrReplaceReadGroups', '-I', args.input, '-O', 
                     first_bam, '-LB', 'lib1', '-PL', 'illumina',
-                    '-PU', 'unit1', '-SM', 'example']
+                    '-PU', 'unit1', '-SM', 'sample']
     subprocess.check_call(rg_make_args)
     
     #this corrects the STAR mapq annotation. Uses 8 threads.
