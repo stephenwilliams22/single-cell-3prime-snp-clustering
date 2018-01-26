@@ -29,7 +29,7 @@ def split(args):
     #loci = ["1:0..40000000"]
     #loci = tk_bam.generate_tiling_windows(in_bam, tk_constants.PARALLEL_LOCUS_SIZE)
     loci = [x.split() for x in open(args.bed_file)]
-    chunks = [{'locus': locus} for locus in loci]
+    chunks = [{'locus': locus, '__mem_gb': 8} for locus in loci]
     return {'chunks': chunks}
 
 def main(args, outs):
@@ -45,26 +45,26 @@ def main(args, outs):
     #subprocess.call(dic_make_args)
     
     
-    first_bam = martian.make_path('output.RG.bam')
-    second_bam = martian.make_path('output.RG.STARcor.bam')
-    rg_make_args = ['gatk-launch', 'AddOrReplaceReadGroups', '-I', args.input, '-O', 
-                    first_bam, '-LB', 'lib1', '-PL', 'illumina',
-                    '-PU', 'unit1', '-SM', 'sample']
-    subprocess.check_call(rg_make_args)
+    #first_bam = martian.make_path('output.RG.bam')
+    #second_bam = martian.make_path('output.RG.STARcor.bam')
+    #rg_make_args = ['gatk-launch', 'AddOrReplaceReadGroups', '-I', args.input, '-O', 
+    #                first_bam, '-LB', 'lib1', '-PL', 'illumina',
+    #                '-PU', 'unit1', '-SM', 'sample']
+    #subprocess.check_call(rg_make_args)
     
     #this corrects the STAR mapq annotation. Uses 8 threads.
-    samtools_args = '''samtools view -@ 8 -h {} | 
-                       awk 'BEGIN{{OFS="\t"}} $5 == 255 {{ $5 = 60; print; next}} {{print}}' | 
-                       samtools view -Sb -@ 8 - > {}'''.format(first_bam, second_bam)
-    subprocess.call(samtools_args, shell=True)            
+    #samtools_args = '''samtools view -@ 8 -h {} | 
+    #                   awk 'BEGIN{{OFS="\t"}} $5 == 255 {{ $5 = 60; print; next}} {{print}}' | 
+    #                   samtools view -Sb -@ 8 - > {}'''.format(first_bam, second_bam)
+    # subprocess.call(samtools_args, shell=True)            
     
-    samtools_index_args = ['samtools', 'index',second_bam]
-    subprocess.call(samtools_index_args)
+    #samtools_index_args = ['samtools', 'index',args.input]
+    #subprocess.call(samtools_index_args)
     
-    gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, 
+    gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', args.input, 
                  '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
         
-    os.remove(first_bam)
+    # os.remove(first_bam)
     
     subprocess.check_call(gatk_args)
     
@@ -72,7 +72,7 @@ def main(args, outs):
     sed_args = '''sed -i '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
     subprocess.call(sed_args, shell=True)
     
-    os.remove(second_bam)
+    # os.remove(second_bam)
     
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
