@@ -7,6 +7,11 @@ filetype json;
 filetype tsv;
 filetype vcf;
 
+stage MODIFY_BAM(
+    in  bam    input,
+    out bam    output,
+)
+
 stage FILTER_READS(
     in  bam    input,
     in  tsv    cell_barcodes,
