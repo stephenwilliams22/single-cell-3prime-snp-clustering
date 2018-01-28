@@ -10,6 +10,7 @@ filetype vcf;
 stage MODIFY_BAM(
     in  bam    input,
     out bam    output,
+    src py     "stages/snpclust/modify_bam",
 )
 
 stage FILTER_READS(
