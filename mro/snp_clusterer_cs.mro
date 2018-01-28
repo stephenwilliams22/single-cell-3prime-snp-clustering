@@ -5,7 +5,6 @@
 
 pipeline SNP_CLUSTERER_CS(
     in  path  reference_path,
-    in  bam   second_bam,
     in  bam   possorted_genome_bam,
     in  tsv   cell_barcodes,
     in  map   align,
@@ -33,7 +32,6 @@ pipeline SNP_CLUSTERER_CS(
     call SNP_CLUSTERER(
         reference_path       = self.reference_path,
         possorted_genome_bam = self.possorted_genome_bam,
-        second_bam           = self.second_bam,
         cell_barcodes        = self.cell_barcodes,
         align                = self.align,
         min_snp_call_qual    = self.min_snp_call_qual,
