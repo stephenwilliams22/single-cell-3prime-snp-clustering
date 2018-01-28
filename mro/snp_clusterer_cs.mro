@@ -47,7 +47,6 @@ pipeline SNP_CLUSTERER_CS(
         min_posterior        = self.min_posterior,
         cluster_ground_truth = self.cluster_ground_truth,
         bed_file             = self.bed_file,
-        second_bam           = self.second_bam,
     )
 
     return (
