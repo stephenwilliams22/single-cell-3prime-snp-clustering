@@ -39,7 +39,7 @@ def main(args, outs):
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
     
 # Run GATK4    
-    gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second.bam, 
+    gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, 
                  '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
             
     subprocess.check_call(gatk_args)
