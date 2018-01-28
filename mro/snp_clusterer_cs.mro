@@ -57,5 +57,6 @@ pipeline SNP_CLUSTERER_CS(
         likelihood_allele_bc_matrices_mex = SNP_CLUSTERER.likelihood_allele_bc_matrices_mex,
         variants                          = SNP_CLUSTERER.variants,
         summary                           = SNP_CLUSTERER.summary,
+        second_bam                        = MODIFY_BAM.second_bam,
     )
 }
