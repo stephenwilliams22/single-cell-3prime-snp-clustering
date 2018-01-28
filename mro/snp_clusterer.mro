@@ -27,6 +27,7 @@ pipeline SNP_CLUSTERER(
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
+    out bam   second_bam,
 )
 {
     call MODIFY_BAM(
