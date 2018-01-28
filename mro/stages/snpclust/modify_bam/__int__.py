@@ -43,5 +43,5 @@ def main(args, outs):
     
     os.remmove(first_bam)
       
-    samtools_index_args = ['samtools', 'index',second_bam]
+    samtools_index_args = ['samtools', 'index','-@','8',second_bam]
     subprocess.call(samtools_index_args)
