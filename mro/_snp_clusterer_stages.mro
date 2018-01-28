@@ -10,7 +10,7 @@ filetype vcf;
 stage MODIFY_BAM(
     in  bam    input,
     in  path   reference_path,
-    out bam    output,
+    out bam    second_bam,
     src py     "stages/snpclust/modify_bam",
 )
 
