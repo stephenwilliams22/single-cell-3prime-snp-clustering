@@ -6,6 +6,7 @@
 pipeline SNP_CLUSTERER_CS(
     in  path  reference_path,
     in  bam   second_bam,
+    in  bam   possorted_genome_bam,
     in  tsv   cell_barcodes,
     in  map   align,
     in  int   min_snp_call_qual,
