@@ -34,7 +34,7 @@ pipeline SNP_CLUSTERER(
     )
     
     call FILTER_READS(
-        input         = self.possorted_genome_bam,
+        input         = self.second_bam,
         cell_barcodes = self.cell_barcodes,
         align         = self.align,
     )
