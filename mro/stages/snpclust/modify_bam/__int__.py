@@ -14,7 +14,7 @@ __MRO__ = '''
 stage MODIFY_BAM(
     in  path   reference_path,
     in  bam    input,
-    src py     "stages/snpclust/modify_bam_pd",
+    src py     "stages/snpclust/modify_bam",
 )
 '''
 
