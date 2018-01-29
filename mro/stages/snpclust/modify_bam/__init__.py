@@ -21,7 +21,7 @@ stage MODIFY_BAM(
 def main(args, outs):
     genome_fasta_path = cr_utils.get_reference_genome_fasta(args.reference_path)
 
-    dic_make_args = dic_make_args = ['gatk-launch', 'CreateSequenceDictionary', '-R', genome_fasta_path]
+    dic_make_args = ['gatk-launch', 'CreateSequenceDictionary', '-R', genome_fasta_path]
     subprocess.check_call(dic_make_args)
     
     first_bam = martian.make_path('output.RG.bam')
