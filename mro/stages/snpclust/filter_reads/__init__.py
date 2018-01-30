@@ -9,7 +9,7 @@ import cellranger.utils as cr_utils
 
 __MRO__ = '''
 stage FILTER_READS(
-    in  bam    input,
+    in  bam    second_bam,
     in  tsv    cell_barcodes,
     in  map    align,
     out bam    output,
