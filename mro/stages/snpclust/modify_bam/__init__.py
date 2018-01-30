@@ -36,7 +36,7 @@ def main(args, outs):
       awk 'BEGIN{{OFS="\t"}} $5 == 255 {{ $5 = 60; print; next}} {{print}}' | 
       samtools view -Sb -@ 8 - > {}'''.format(first_bam, second_bam)
     
-    subprocess.call(samtools_args, shell=True)            
+    subprocess.check_call(samtools_args, shell=True)            
     
     os.remove(first_bam)
       
