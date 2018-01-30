@@ -32,7 +32,7 @@ def main(args, outs):
       
       
     #this corrects the STAR mapq annotation. Uses 8 threads.
-    samtools_args = '''samtools view -@ 8 -h {}
+    samtools_args = '''samtools view -@ 8 -h {} |
       awk 'BEGIN{{OFS="\t"}} $5 == 255 {{ $5 = 60; print; next}} {{print}}' | 
       samtools view -Sb -@ 8 - > {}'''.format(first_bam, second_bam)
     
