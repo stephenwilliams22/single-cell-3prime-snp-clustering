@@ -9,7 +9,7 @@ import cellranger.utils as cr_utils
 
 __MRO__ = '''
 stage FILTER_READS(
-    in  bam    second_bam,
+    in  bam    input,
     in  tsv    cell_barcodes,
     in  map    align,
     out bam    output,
@@ -21,7 +21,7 @@ stage FILTER_READS(
 '''
 
 def split(args):
-    with tk_bam.create_bam_infile(args.second_bam) as in_bam:
+    with tk_bam.create_bam_infile(args.input) as in_bam:
         chunks = tk_bam.chunk_bam_records(in_bam, chunk_bound_key=cr_utils.pos_sort_key,
                                           chunk_size_gb=cr_constants.BAM_CHUNK_SIZE_GB,
                                           max_chunks=cr_constants.MAX_BAM_CHUNKS)

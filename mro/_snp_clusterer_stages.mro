@@ -12,6 +12,9 @@ stage MODIFY_BAM(
     in  path   reference_path,
     out bam    second_bam,
     src py     "stages/snpclust/modify_bam",
+) using (
+    threads = 8,
+    mem_gb = 6,
 )
 
 stage FILTER_READS(
@@ -32,8 +35,12 @@ stage CALL_SNPS(
     in  path   bed_file,
     out vcf[]  output,
     src py     "stages/snpclust/call_snps",
-) split using (
+) split (
     in  string locus,
+)
+ using (
+    mem_gb = 32,
+    threads = 8,
 )
 
 stage COUNT_ALLELES(
