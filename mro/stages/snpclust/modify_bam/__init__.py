@@ -40,5 +40,5 @@ def main(args, outs):
     
     os.remove(first_bam)
       
-    samtools_index_args = ['samtools', 'index','-@','8',second_bam]
+    samtools_index_args = ['samtools', 'index', '-@', '8',second_bam]
     subprocess.check_call(samtools_index_args)
