@@ -24,8 +24,10 @@ def main(args, outs):
     #dic_make_args = ['gatk-launch', 'CreateSequenceDictionary', '-R', genome_fasta_path]
     #subprocess.check_call(dic_make_args)
     
-    first_bam = martian.make_path('output.RG.bam')
-    second_bam = martian.make_path('output.RG.STARcor.bam')
+    first_bam = martian.make_path('first_bam.bam')
+    second_bam = martian.make_path('second_bam.bam')
+    
+    #add the readgroup needed for GATK
     rg_make_args = ['gatk-launch', 'AddOrReplaceReadGroups', '-I', args.input, '-O', 
                       first_bam, '-LB', 'lib1', '-PL', 'illumina','-PU', 'unit1', '-SM', 'sample']
     subprocess.check_call(rg_make_args)
