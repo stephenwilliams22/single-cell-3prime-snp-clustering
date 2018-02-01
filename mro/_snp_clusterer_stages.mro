@@ -12,7 +12,8 @@ stage MODIFY_BAM(
     in  path   reference_path,
     out bam    second_bam,
     src py     "stages/snpclust/modify_bam",
-) using (
+) 
+ using (
     threads = 8,
     mem_gb = 6,
 )
