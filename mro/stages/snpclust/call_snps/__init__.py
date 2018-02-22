@@ -40,7 +40,8 @@ def main(args, outs):
     
 # Run GATK4    
     gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', args.input, 
-                 '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
+                 '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', 
+                 '--dont-use-soft-clipped-bases', 'true', '-L', bed_path, '-O','output.vcf']
             
     subprocess.check_call(gatk_args)
     
