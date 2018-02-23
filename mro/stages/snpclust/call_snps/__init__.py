@@ -24,7 +24,7 @@ stage CALL_SNPS(
 )
 '''
 
-star_cor_bam = martian.make_path('star_cor_bam.bam')
+#star_cor_bam = martian.make_path('star_cor_bam.bam')
 
 # split the .bed file and make chunks
 def split(args):
