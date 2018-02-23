@@ -24,15 +24,15 @@ stage CALL_SNPS(
 )
 '''
 
-    
-
-# split the .bed file and make chunks
+# define the split arguments. Using the .bed file and make chunks
 def split(args):
     loci = [x.split() for x in open(args.bed_file)]
     chunks = [{'locus': locus, '__mem_gb': 8} for locus in loci]
     return {'chunks': chunks}
 
-# define the reference 
+# define the main arguments
+# correct the mapq notation of the bam (from 255 to 60)
+# call the snps with GATK4
 def main(args, outs):
     genome_fasta_path = cr_utils.get_reference_genome_fasta(args.reference_path)
         
@@ -65,7 +65,8 @@ def main(args, outs):
                  '--add-output-vcf-command-line', 'false']
             
     subprocess.check_call(gatk_args)
-        
+
+# define the join        
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
     
