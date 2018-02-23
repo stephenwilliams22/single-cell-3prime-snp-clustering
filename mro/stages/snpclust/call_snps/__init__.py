@@ -38,6 +38,16 @@ def main(args, outs):
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
     
+# Correct the STAR mapping from 255 to 60 and take care of split reads
+    star_args = ['gatk-launch', 'SplitNCigarReads',
+                 '-I', args.input,
+                 '-O',
+                 '-R', genome_fasta_path,
+                 '--skip-mapping-quality-transform', 'false',
+                 '--create-output-bam-index', 'true']
+                 
+    subprocess.check_call(star_args)
+    
 # Run GATK4    
     gatk_args = ['gatk-launch', 'HaplotypeCaller', 
                  '-R', genome_fasta_path, 
