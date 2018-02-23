@@ -24,6 +24,8 @@ stage CALL_SNPS(
 )
 '''
 
+star_cor_bam = martian.make_path('star_cor_bam.bam')
+
 # split the .bed file and make chunks
 def split(args):
     loci = [x.split() for x in open(args.bed_file)]
@@ -39,8 +41,6 @@ def main(args, outs):
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
 
-        
-star_cor_bam = martian.make_path('star_cor_bam.bam')
 
 # Correct the STAR mapping from 255 to 60 and take care of split reads
 star_args = ['gatk-launch', 'SplitNCigarReads',
