@@ -39,12 +39,12 @@ def main(args, outs):
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
 
         
-first_bam = martian.make_path('first_bam.bam')
+star_cor_bam = martian.make_path('star_cor_bam.bam')
 
 # Correct the STAR mapping from 255 to 60 and take care of split reads
     star_args = ['gatk-launch', 'SplitNCigarReads',
                  '-I', args.input,
-                 '-O', first_bam.bam,
+                 '-O', star_cor_bam,
                  '-R', genome_fasta_path,
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'true']
@@ -54,7 +54,7 @@ first_bam = martian.make_path('first_bam.bam')
 # Run GATK4    
     gatk_args = ['gatk-launch', 'HaplotypeCaller', 
                  '-R', genome_fasta_path, 
-                 '-I', first_bam.bam, 
+                 '-I', star_cor_bam, 
                  '-O','output.vcf', 
                  '-L', bed_path,  
                  '--minimum-mapping-quality', '30', 
