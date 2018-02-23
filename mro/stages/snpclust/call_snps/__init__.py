@@ -44,9 +44,9 @@ def main(args, outs):
 
 # Correct the STAR mapping from 255 to 60 and take care of split reads
 star_args = ['gatk-launch', 'SplitNCigarReads',
+             '-R', genome_fasta_path,
              '-I', args.input,
              '-O', star_cor_bam,
-             '-R', genome_fasta_path,
              '--skip-mapping-quality-transform', 'false',
              '--create-output-bam-index', 'true']
                  
