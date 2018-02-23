@@ -16,7 +16,7 @@ stage CALL_SNPS(
     in  bam    input,
     in  int    n_donors,
     out vcf[]  output,
-    out star_cor_bam    output,
+    out bam    output,
     src py     "stages/snpclust/call_snps_pd",
     in  path    bed_file,
 ) split using (
