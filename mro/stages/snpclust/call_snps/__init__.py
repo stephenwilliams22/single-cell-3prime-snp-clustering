@@ -24,7 +24,7 @@ stage CALL_SNPS(
 )
 '''
 
-#star_cor_bam = martian.make_path('star_cor_bam.bam')
+    #star_cor_bam = martian.make_path('star_cor_bam.bam')
 
 # split the .bed file and make chunks
 def split(args):
@@ -43,27 +43,27 @@ def main(args, outs):
 
 
 # Correct the STAR mapping from 255 to 60 and take care of split reads
-star_args = ['gatk-launch', 'SplitNCigarReads',
-             '-R', genome_fasta_path,
-             '-I', args.input,
-             '-O', star_cor_bam,
-             '--skip-mapping-quality-transform', 'false',
-             '--create-output-bam-index', 'true']
+    star_args = ['gatk-launch', 'SplitNCigarReads',
+                 '-R', genome_fasta_path,
+                 '-I', args.input,
+                 '-O', star_cor_bam,
+                 '--skip-mapping-quality-transform', 'false',
+                 '--create-output-bam-index', 'true']
                  
-subprocess.check_call(star_args)
+    subprocess.check_call(star_args)
     
 # Run GATK4    
-gatk_args = ['gatk-launch', 'HaplotypeCaller', 
-             '-R', genome_fasta_path, 
-             '-I', star_cor_bam, 
-             '-O','output.vcf', 
-             '-L', bed_path,  
-             '--minimum-mapping-quality', '30', 
-             '--min-base-quality-score', '20', 
-             '--dont-use-soft-clipped-bases', 'true', 
-             '--add-output-vcf-command-line', 'false']
+    gatk_args = ['gatk-launch', 'HaplotypeCaller', 
+                 '-R', genome_fasta_path, 
+                 '-I', star_cor_bam, 
+                 '-O','output.vcf', 
+                 '-L', bed_path,  
+                 '--minimum-mapping-quality', '30', 
+                 '--min-base-quality-score', '20', 
+                 '--dont-use-soft-clipped-bases', 'true', 
+                 '--add-output-vcf-command-line', 'false']
             
-subprocess.check_call(gatk_args)
+    subprocess.check_call(gatk_args)
         
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
