@@ -39,15 +39,18 @@ def main(args, outs):
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
     
 # Run GATK4    
-    gatk_args = ['gatk-launch', 'HaplotypeCaller', '-R', genome_fasta_path, '-I', second_bam, 
-                 '--minimum-mapping-quality', '30', '--min-base-quality-score', '20', '-L', bed_path, '-O','output.vcf']
+    gatk_args = ['gatk-launch', 'HaplotypeCaller', 
+                 '-R', genome_fasta_path, 
+                 '-I', args.input, 
+                 '-O','output.vcf', 
+                 '-L', bed_path,  
+                 '--minimum-mapping-quality', '30', 
+                 '--min-base-quality-score', '20', 
+                 '--dont-use-soft-clipped-bases', 'true', 
+                 '--add-output-vcf-command-line', 'false']
             
     subprocess.check_call(gatk_args)
-    
-# modify the GATK vcf to remove header issues
-    sed_args = '''sed -i '/##FORMAT=<ID=PL/,/##INFO=<ID=AC/{//!d}' output.vcf'''
-    subprocess.call(sed_args, shell=True)
         
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
-   
+    
