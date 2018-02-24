@@ -10,12 +10,11 @@ filetype vcf;
 stage MODIFY_BAM(
     in  bam    input,
     in  path   reference_path,
+    in  path    bed_file,
     out bam    second_bam,
     src py     "stages/snpclust/modify_bam",
-) 
- using (
-    threads = 8,
-    mem_gb = 6,
+) split (
+    in  string locus,
 )
 
 stage FILTER_READS(
