@@ -11,7 +11,7 @@ stage MODIFY_BAM(
     in  bam    input,
     in  path   reference_path,
     in  path    bed_file,
-    out bam    second_bam,
+    out bam    output,
     src py     "stages/snpclust/modify_bam",
 ) split (
     in  string locus,
