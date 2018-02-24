@@ -40,18 +40,7 @@ def main(args, outs):
     bed_path = martian.make_path('region.bed')
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
-    
-    star_cor_bam = martian.make_path('star_cor_bam.bam')
 
-# Correct the STAR mapping from 255 to 60 and take care of split reads
-    star_args = ['gatk-launch', 'SplitNCigarReads',
-                 '-R', genome_fasta_path,
-                 '-I', args.input,
-                 '-O', star_cor_bam,
-                 '--skip-mapping-quality-transform', 'false',
-                 '--create-output-bam-index', 'true']
-                 
-    subprocess.check_call(star_args)
     
 # Run GATK4    
     gatk_args = ['gatk-launch', 'HaplotypeCaller', 
