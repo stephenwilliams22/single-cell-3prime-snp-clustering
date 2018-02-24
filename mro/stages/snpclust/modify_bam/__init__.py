@@ -38,12 +38,12 @@ def main(args, outs):
 
     
     # Correct the STAR mapping from 255 to 60 and take care of split reads
-    star_cor_bam = martian.make_path('star_cor_bam.bam')
+    output_bam = martian.make_path('output.bam')
     star_args = ['gatk-launch', 'SplitNCigarReads',
                  '-R', genome_fasta_path,
                  '-I', args.input,
                  '-L', bed_path,
-                 '-O', star_cor_bam,
+                 '-O', output_bam,
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'true']
                  
@@ -53,5 +53,5 @@ def main(args, outs):
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
-    tk_bam.concatenate(outs.output, star_cor_bam.bam)
+    tk_bam.concatenate(outs.output, input_bams)
     tk_bam.index(outs.output)
