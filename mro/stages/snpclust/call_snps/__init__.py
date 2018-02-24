@@ -47,8 +47,7 @@ def main(args, outs):
                  '--minimum-mapping-quality', '30', 
                  '--min-base-quality-score', '20', 
                  '--dont-use-soft-clipped-bases', 'true', 
-                 '--add-output-vcf-command-line', 'false',
-                 '--max-reads-in-memory', '50000']
+                 '--add-output-vcf-command-line', 'false']
             
     subprocess.check_call(gatk_args)
         
