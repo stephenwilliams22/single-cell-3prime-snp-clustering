@@ -52,5 +52,5 @@ def main(args, outs):
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
-    tk_bam.concatenate(outs.output, input_bams)
+    tk_bam.concatenate(outs.output, star_cor_bam)
     tk_bam.index(outs.output)
