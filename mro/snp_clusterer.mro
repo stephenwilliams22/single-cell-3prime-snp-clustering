@@ -32,7 +32,7 @@ pipeline SNP_CLUSTERER(
     call MODIFY_BAM(
         input         = self.possorted_genome_bam,
         reference_path  = self.reference_path,
-        bed_file      = self.bed_file
+        bed_file      = self.bed_file,
     )
     
     call FILTER_READS(
