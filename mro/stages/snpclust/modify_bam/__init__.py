@@ -42,6 +42,7 @@ def main(args, outs):
     star_args = ['gatk-launch', 'SplitNCigarReads',
                  '-R', genome_fasta_path,
                  '-I', args.input,
+                 '-L', bed_path,
                  '-O', star_cor_bam,
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'true']
