@@ -32,10 +32,11 @@ pipeline SNP_CLUSTERER(
     call MODIFY_BAM(
         input         = self.possorted_genome_bam,
         reference_path  = self.reference_path,
+        bed_file      = self.bed_file
     )
     
     call FILTER_READS(
-        input         = MODIFY_BAM.second_bam,
+        input         = MODIFY_BAM.output,
         cell_barcodes = self.cell_barcodes,
         align         = self.align,
     )
