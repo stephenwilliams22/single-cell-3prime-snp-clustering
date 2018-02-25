@@ -44,6 +44,7 @@ def main(args, outs):
                  '-I', args.input,
                  '-L', bed_path,
                  '-O', output_bam,
+                 '--max-reads-in-memory', '50000',
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'true']
                  
