@@ -68,7 +68,7 @@ def main(args, outs):
     tk_bam.sort(output_bam)
     os.remove(outs.output)
     os.rename('output_sorted.bam', 'output.bam')
-    tk_bam.index(outs.output)
+    tk_bam.index('output.bam')
     
     #join the bams together
 def join(args, outs, chunk_defs, chunk_outs):
