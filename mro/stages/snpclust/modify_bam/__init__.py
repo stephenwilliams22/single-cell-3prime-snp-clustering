@@ -46,7 +46,8 @@ def main(args, outs):
                  '-O', output_bam,
                  '--max-reads-in-memory', '50000',
                  '--skip-mapping-quality-transform', 'false',
-                 '--create-output-bam-index', 'true']
+                 '--create-output-bam-index', 'true',
+                 '--TMP_DIR', '/mnt/home/stephen/yard']
     
     #star_args = ['java', 
     #             '-Djava.io.tmpdir=/mnt/home/stephen/yard',
