@@ -46,7 +46,7 @@ def main(args, outs):
                  '-O', output_bam,
                  '--max-reads-in-memory', '50000',
                  '--skip-mapping-quality-transform', 'false',
-                 #'--create-output-bam-index', 'true',
+                 '--create-output-bam-index', 'false',
                  '--TMP_DIR', os.getcwd()]
     
     #star_args = ['java', 
@@ -65,10 +65,10 @@ def main(args, outs):
     subprocess.check_call(star_args)
     
     #sort and index the bam
-    args = ['samtools', 'sort', output_bam, '-o', 'output_sorted.bam']
-    subprocess.check_call(args, shell=True)
-    #tk_bam.sort(output_bam)
-    #os.remove(outs.output)
+    #args = ['samtools', 'sort', output_bam, '-o', 'output_sorted.bam']
+    #subprocess.check_call(args, shell=True)
+    tk_bam.sort(output_bam)
+    os.remove(outs.output)
     os.rename('output_sorted.bam', 'output.bam')
     tk_bam.index('output.bam')
     
