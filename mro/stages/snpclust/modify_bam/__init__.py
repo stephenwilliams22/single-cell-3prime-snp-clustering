@@ -48,7 +48,8 @@ def main(args, outs):
     #             '--skip-mapping-quality-transform', 'false',
     #             '--create-output-bam-index', 'true']
     
-    star_args = ['java', '-jar', 'GenomeAnalysisTK.jar', '-T', 'SplitNCigarReads', 
+    star_args = ['java', '-jar', '/mnt/opt/gatk/3.8/GenomeAnalysisTK.jar', 
+                 '-T', 'SplitNCigarReads', 
                  '-R', genome_fasta_path, 
                  '-I', genome_fasta_path, 
                  '-o', output_bam, 
