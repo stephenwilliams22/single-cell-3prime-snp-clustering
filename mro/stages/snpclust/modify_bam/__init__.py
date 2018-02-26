@@ -87,7 +87,7 @@ def main(args, outs):
 #    tk_bam.index(outs.output)
     
 def join(args, outs, chunk_defs, chunk_outs):
-    filtered_inputs = [a for a in outs.output if os.path.isfile(a)]
+    filtered_inputs = [a for a in args.output if os.path.isfile(a)]
     #tk_bam.concatenate(outs.bc_sorted_bam, filtered_inputs)
     args = ['samtools', 'merge', '-@', '10', outs.output]
     args.extend(filtered_inputs)
