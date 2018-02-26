@@ -39,27 +39,27 @@ def main(args, outs):
     
     # Correct the STAR mapping from 255 to 60 and take care of split reads
     output_bam = martian.make_path('output.bam')
-    #star_args = ['gatk-launch', 'SplitNCigarReads',
-    #             '-R', genome_fasta_path,
-    #             '-I', args.input,
-    #             '-L', bed_path,
-    #             '-O', output_bam,
-    #             '--max-reads-in-memory', '50000',
-    #             '--skip-mapping-quality-transform', 'false',
-    #             '--create-output-bam-index', 'true']
-    
-    star_args = ['java', 
-                 '-Djava.io.tmpdir=/mnt/home/stephen/yard',
-                 '-jar', '/mnt/opt/gatk/3.8/GenomeAnalysisTK.jar', 
-                 '-T', 'SplitNCigarReads', 
-                 '-R', genome_fasta_path, 
-                 '-I', args.input, 
-                 '-o', output_bam,
+    star_args = ['gatk-launch', 'SplitNCigarReads',
+                 '-R', genome_fasta_path,
+                 '-I', args.input,
                  '-L', bed_path,
-                 '-rf', 'ReassignOneMappingQuality', 
-                 '-RMQF', '255', 
-                 '-RMQT', '60', 
-                 '-U', 'ALLOW_N_CIGAR_READS']
+                 '-O', output_bam,
+                 '--max-reads-in-memory', '50000',
+                 '--skip-mapping-quality-transform', 'false',
+                 '--create-output-bam-index', 'true']
+    
+    #star_args = ['java', 
+    #             '-Djava.io.tmpdir=/mnt/home/stephen/yard',
+    #             '-jar', '/mnt/opt/gatk/3.8/GenomeAnalysisTK.jar', 
+    #             '-T', 'SplitNCigarReads', 
+    #             '-R', genome_fasta_path, 
+    #             '-I', args.input, 
+    #             '-o', output_bam,
+    #             '-L', bed_path,
+    #             '-rf', 'ReassignOneMappingQuality', 
+    #             '-RMQF', '255', 
+    #             '-RMQT', '60', 
+    #             '-U', 'ALLOW_N_CIGAR_READS']
                  
     subprocess.check_call(star_args)
     
