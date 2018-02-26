@@ -64,12 +64,18 @@ def main(args, outs):
                  
     subprocess.check_call(star_args)
     
+    #sort and index the bam
+    tk_bam.sort(output_bam)
+    os.remove(outs.output)
+    os.rename('output_sorted.bam', 'output.bam')
+    tk_bam.index(outs.output)
+    
     #join the bams together
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
     tk_bam.concatenate(outs.output, input_bams)
-    tk_bam.sort(outs.output)
-    os.remove(outs.output)
-    os.rename('output_sorted.bam', 'output.bam')
+    #tk_bam.sort(outs.output)
+    #os.remove(outs.output)
+    #os.rename('output_sorted.bam', 'output.bam')
     tk_bam.index(outs.output)
