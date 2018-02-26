@@ -65,8 +65,8 @@ def main(args, outs):
     subprocess.check_call(star_args)
     
     #sort and index the bam
-    args = ['samtools', 'sort', 'output.bam', '>', 'output_sorted.bam']
-    subprocess.check_call(args)
+    args = ['samtools', 'sort', output_bam, '-o', 'output_sorted.bam']
+    subprocess.check_call(args, shell=True)
     #tk_bam.sort(output_bam)
     #os.remove(outs.output)
     os.rename('output_sorted.bam', 'output.bam')
