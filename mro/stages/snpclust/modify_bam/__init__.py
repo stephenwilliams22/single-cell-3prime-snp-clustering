@@ -73,14 +73,25 @@ def main(args, outs):
     #tk_bam.index('output.bam')
     
     #join the bams together
+#def join(args, outs, chunk_defs, chunk_outs):
+#    outs.coerce_strings()
+#    input_bams = [str(chunk.output) for chunk in chunk_outs]
+#    #args_echo = ['echo', input_bams]
+#    #subprocess.check_call(args_echo)
+#    args = ['samtools', 'merge', '-@', '10', outs.output]
+#    subprocess.check_call(args)
+#    #tk_bam.concatenate(outs.output, input_bams)
+#    tk_bam.sort(outs.output)
+#    os.remove(outs.output)
+#    os.rename('output_sorted.bam', 'output.bam')
+#    tk_bam.index(outs.output)
+    
 def join(args, outs, chunk_defs, chunk_outs):
-    outs.coerce_strings()
-    input_bams = [str(chunk.output) for chunk in chunk_outs]
-    #args_echo = ['echo', input_bams]
-    #subprocess.check_call(args_echo)
-    args = ['samtools', 'merge', '-@', '10', '-b', input_bams]
+    filtered_inputs = [a for a in outs.output if os.path.isfile(a)]
+    #tk_bam.concatenate(outs.bc_sorted_bam, filtered_inputs)
+    args = ['samtools', 'merge', '-@', '10', outs.output]
+    args.extend(filtered_inputs)
     subprocess.check_call(args)
-    #tk_bam.concatenate(outs.output, input_bams)
     tk_bam.sort(outs.output)
     os.remove(outs.output)
     os.rename('output_sorted.bam', 'output.bam')
