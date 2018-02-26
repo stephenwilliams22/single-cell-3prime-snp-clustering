@@ -48,50 +48,20 @@ def main(args, outs):
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'false',
                  '--TMP_DIR', os.getcwd()]
-    
-    #star_args = ['java', 
-    #             '-Djava.io.tmpdir=/mnt/home/stephen/yard',
-    #             '-jar', '/mnt/opt/gatk/3.8/GenomeAnalysisTK.jar', 
-    #             '-T', 'SplitNCigarReads', 
-    #             '-R', genome_fasta_path, 
-    #             '-I', args.input, 
-    #             '-o', output_bam,
-    #             '-L', bed_path,
-    #             '-rf', 'ReassignOneMappingQuality', 
-    #             '-RMQF', '255', 
-    #             '-RMQT', '60', 
-    #             '-U', 'ALLOW_N_CIGAR_READS']
                  
     subprocess.check_call(star_args)
-    
-    #sort and index the bam
-    #args = ['samtools', 'sort', output_bam, '-o', 'output_sorted.bam']
-    #subprocess.check_call(args, shell=True)
-    #tk_bam.sort(output_bam)
-    #os.remove(outs.output)
-    #os.rename('output_sorted.bam', 'output.bam')
-    #tk_bam.index('output.bam')
     
     #join the bams together
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
-    args = ['samtools', 'merge', '-@', '10', outs.output]
+    args_merge = ['samtools', 'merge', '-@', str(args.__threads), outs.output]
     args.extend(input_bams)
-    subprocess.check_call(args)
+    subprocess.check_call(args_merge)
     #tk_bam.concatenate(outs.output, input_bams)
-    tk_bam.sort(outs.output)
+    #tk_bam.sort(outs.output)
+    args_sort = ['samtools', 'sort', '-@', str(args.__threads), 'output_sorted.bam']
+    subprocess.check_call(args_sort)
     os.remove(outs.output)
     os.rename('output_sorted.bam', 'output.bam')
     tk_bam.index(outs.output)
-    
-#def join(args, outs, chunk_defs, chunk_outs):
-#    filtered_inputs = [a for a in args.output if os.path.isfile(a)]
-#    #tk_bam.concatenate(outs.bc_sorted_bam, filtered_inputs)
-#    args = ['samtools', 'merge', '-@', '10', outs.output]
-#    args.extend(filtered_inputs)
-#    subprocess.check_call(args)
-#    tk_bam.sort(outs.output)
-#    os.remove(outs.output)
-#    os.rename('output_sorted.bam', 'output.bam')
-#    tk_bam.index(outs.output)
