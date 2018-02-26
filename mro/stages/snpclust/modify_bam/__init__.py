@@ -64,7 +64,7 @@ def main(args, outs):
                  
     subprocess.check_call(star_args)
     
-    #join the bams together. NEED TO FIGURE THIS OUT
+    #join the bams together
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
