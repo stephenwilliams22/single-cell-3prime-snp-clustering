@@ -77,6 +77,7 @@ def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
     args = ['samtools', 'merge', '-@', '10', outs.output]
+    subprocess.check_call(args)
     #tk_bam.concatenate(outs.output, input_bams)
     tk_bam.sort(outs.output)
     os.remove(outs.output)
