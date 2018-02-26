@@ -60,7 +60,7 @@ def join(args, outs, chunk_defs, chunk_outs):
     subprocess.check_call(args_merge)
     #tk_bam.concatenate(outs.output, input_bams)
     #tk_bam.sort(outs.output)
-    args_sort = ['samtools', 'sort', '-@', str(args.__threads), 'output.bam']
+    args_sort = ['samtools', 'sort', '-@', str(args.__threads), 'output.bam', '-o', 'output_sorted.bam']
     subprocess.check_call(args_sort)
     os.remove(outs.output)
     os.rename('output_sorted.bam', 'output.bam')
