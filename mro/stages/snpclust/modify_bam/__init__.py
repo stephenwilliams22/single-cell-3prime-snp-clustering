@@ -24,7 +24,7 @@ stage MODIFY_BAM(
 # split the .bed file and make chunks
 def split(args):
     loci = [x.split() for x in open(args.bed_file)]
-    chunks = [{'locus': locus, '__mem_gb': 8, '__threads': 1} for locus in loci]
+    chunks = [{'locus': locus, '__mem_gb': 16, '__threads': 1} for locus in loci]
     return {'chunks': chunks}
 
 # define the reference 
@@ -47,7 +47,7 @@ def main(args, outs):
                  '--max-reads-in-memory', '50000',
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'true',
-                 '--TMP_DIR', '/mnt/home/stephen/yard']
+                 '--TMP_DIR', os.getcwd()]
     
     #star_args = ['java', 
     #             '-Djava.io.tmpdir=/mnt/home/stephen/yard',
