@@ -25,7 +25,7 @@ stage MODIFY_BAM(
 def split(args):
     loci = [x.split() for x in open(args.bed_file)]
     chunks = [{'locus': locus, '__mem_gb': 16, '__threads': 1} for locus in loci]
-    return {'chunks': chunks}
+    return {'chunks': chunks, "join": {'__mem_gb': 4, '__threads': 10}}
 
 # define the reference 
 def main(args, outs):
@@ -67,18 +67,18 @@ def main(args, outs):
     #sort and index the bam
     #args = ['samtools', 'sort', output_bam, '-o', 'output_sorted.bam']
     #subprocess.check_call(args, shell=True)
-    tk_bam.sort(output_bam)
-    os.remove(outs.output)
-    os.rename('output_sorted.bam', 'output.bam')
-    tk_bam.index('output.bam')
+    #tk_bam.sort(output_bam)
+    #os.remove(outs.output)
+    #os.rename('output_sorted.bam', 'output.bam')
+    #tk_bam.index('output.bam')
     
     #join the bams together
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
-    #args = ['samtools', 'merge', '-@', '10', outs.output]
-    tk_bam.concatenate(outs.output, input_bams)
-    #tk_bam.sort(outs.output)
-    #os.remove(outs.output)
-    #os.rename('output_sorted.bam', 'output.bam')
+    args = ['samtools', 'merge', '-@', '10', outs.output]
+    #tk_bam.concatenate(outs.output, input_bams)
+    tk_bam.sort(outs.output)
+    os.remove(outs.output)
+    os.rename('output_sorted.bam', 'output.bam')
     tk_bam.index(outs.output)
