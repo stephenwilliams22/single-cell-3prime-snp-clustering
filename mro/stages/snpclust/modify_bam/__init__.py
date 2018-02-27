@@ -30,13 +30,13 @@ def split(args):
 # define the reference 
 def main(args, outs):
     genome_fasta_path = cr_utils.get_reference_genome_fasta(args.reference_path)
-        
+
     chrom, start, stop = args.locus
     bed_path = martian.make_path('region.bed')
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
 
-    
+
     # Correct the STAR mapping from 255 to 60 and take care of split reads
     output_bam = martian.make_path('output.bam')
     star_args = ['gatk-launch', 'SplitNCigarReads',
@@ -44,24 +44,38 @@ def main(args, outs):
                  '-I', args.input,
                  '-L', bed_path,
                  '-O', output_bam,
-                 '--max-reads-in-memory', '50000',
+#                 '--max-reads-in-memory', '50000',
                  '--skip-mapping-quality-transform', 'false',
                  '--create-output-bam-index', 'false',
                  '--TMP_DIR', os.getcwd()]
-                 
+
     subprocess.check_call(star_args)
-    
-    #join the bams together
+
+
+#run the join
+#def join(args, outs, chunk_defs, chunk_outs):
+#    outs.coerce_strings()
+#    input_bams = [str(chunk.output) for chunk in chunk_outs]
+#    #args_merge = ['samtools', 'merge', '-@', str(args.__threads), outs.output]
+#    #args_merge.extend(input_bams)
+#    #subprocess.check_call(args_merge)
+#    tk_bam.concatenate(outs.output, input_bams)
+#    tk_bam.sort(outs.output)
+#    #args_sort = ['samtools', 'sort', '-@', str(args.__threads), '-o', 'output_sorted.bam', 'output.bam']
+#    #subprocess.check_call(args_sort)
+#    os.remove(outs.output)
+#    os.rename('output_sorted.bam', 'output.bam')
+#    tk_bam.index(outs.output)
+
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
-    args_merge = ['samtools', 'merge', '-@', str(args.__threads), outs.output]
+    args_merge = ['sambamba', 'merge', '-t', str(args.__threads), '-p', 'output_merge.bam']
+    #create an extended list to put at the end of args_merge
     args_merge.extend(input_bams)
     subprocess.check_call(args_merge)
-    #tk_bam.concatenate(outs.output, input_bams)
-    tk_bam.sort(outs.output)
-    #args_sort = ['samtools', 'sort', '-@', str(args.__threads), '-o', 'output_sorted.bam', 'output.bam']
-    #subprocess.check_call(args_sort)
-    os.remove(outs.output)
-    os.rename('output_sorted.bam', 'output.bam')
-    tk_bam.index(outs.output)
+    #tk_bam.sort('output_merge.bam')
+    #so.remove(outs.output)
+    tk_bam.index('output_merge.bam')
+    os.rename('output_merge.bam', outs.output)
+    os.rename('output_merge.bam.bai', outs.output+'.bai')
