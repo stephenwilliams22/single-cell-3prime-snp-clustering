@@ -70,12 +70,13 @@ def main(args, outs):
 def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     input_bams = [str(chunk.output) for chunk in chunk_outs]
+    #merg and index
     args_merge = ['sambamba', 'merge', '-t', str(args.__threads), 'output_merge.bam']
     #create an extended list to put at the end of args_merge
     args_merge.extend(input_bams)
     subprocess.check_call(args_merge)
     #tk_bam.sort('output_merge.bam')
     #so.remove(outs.output)
-    tk_bam.index('output_merge.bam')
+    #tk_bam.index('output_merge.bam')
     os.rename('output_merge.bam', outs.output)
     os.rename('output_merge.bam.bai', outs.output+'.bai')
