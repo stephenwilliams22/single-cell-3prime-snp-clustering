@@ -27,6 +27,7 @@ pipeline SNP_CLUSTERER(
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
+    out vcf   raw_variants,
 )
 {
     call MODIFY_BAM(
@@ -89,5 +90,6 @@ pipeline SNP_CLUSTERER(
         likelihood_allele_bc_matrices_mex = COUNT_ALLELES.likelihood_allele_bc_matrices_mex,
         variants                          = COUNT_ALLELES.filtered_variants,
         summary                           = SUMMARIZE_REPORTS.summary,
+        raw_variants                      = CALL_SNPS.raw_variants,
     )
 }
