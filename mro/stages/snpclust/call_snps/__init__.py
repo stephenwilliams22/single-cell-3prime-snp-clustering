@@ -54,3 +54,4 @@ def main(args, outs):
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
     
+    tk_io.combine_vcfs(outs.raw_variants, outs.output)
