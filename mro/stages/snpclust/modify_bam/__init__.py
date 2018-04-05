@@ -25,7 +25,7 @@ stage MODIFY_BAM(
 def split(args):
     loci = [x.split() for x in open(args.bed_file)]
     chunks = [{'locus': locus, '__mem_gb': 16, '__threads': 1} for locus in loci]
-    return {'chunks': chunks, "join": {'__mem_gb': 4, '__threads': 10}}
+    return {'chunks': chunks, "join": {'__mem_gb': 150, '__threads': 20}}
 
 # define the reference 
 def main(args, outs):
