@@ -14,6 +14,7 @@ __MRO__ = '''
 stage MODIFY_BAM(
     in  path   reference_path,
     in  bam    input,
+    out bam    chunked_bam,
     in  sample input, # need to add this to the mro
     src py     "stages/snpclust/modify_bam",
     in  path    bed_file,
