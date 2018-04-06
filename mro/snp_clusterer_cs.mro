@@ -27,6 +27,7 @@ pipeline SNP_CLUSTERER_CS(
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
+    out vcf   raw_variants,
 )
 {
     call SNP_CLUSTERER(
@@ -56,5 +57,6 @@ pipeline SNP_CLUSTERER_CS(
         likelihood_allele_bc_matrices_mex = SNP_CLUSTERER.likelihood_allele_bc_matrices_mex,
         variants                          = SNP_CLUSTERER.variants,
         summary                           = SNP_CLUSTERER.summary,
+        raw_variants                      = SNP_CLUSTERER.raw_variants,
     )
 }

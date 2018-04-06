@@ -27,10 +27,17 @@ pipeline SNP_CLUSTERER(
     out path  likelihood_allele_bc_matrices_mex,
     out vcf   variants,
     out json  summary,
+    out vcf   raw_variants,
 )
 {
-    call FILTER_READS(
+    call MODIFY_BAM(
         input         = self.possorted_genome_bam,
+        reference_path  = self.reference_path,
+        bed_file      = self.bed_file,
+    )
+    
+    call FILTER_READS(
+        input         = MODIFY_BAM.output,
         cell_barcodes = self.cell_barcodes,
         align         = self.align,
     )
@@ -83,5 +90,6 @@ pipeline SNP_CLUSTERER(
         likelihood_allele_bc_matrices_mex = COUNT_ALLELES.likelihood_allele_bc_matrices_mex,
         variants                          = COUNT_ALLELES.filtered_variants,
         summary                           = SUMMARIZE_REPORTS.summary,
+        raw_variants                      = CALL_SNPS.raw_variants,
     )
 }

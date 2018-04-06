@@ -45,7 +45,7 @@ def main(args, outs):
 # Run GATK4    
     gatk_args = ['gatk-launch', 'HaplotypeCaller', 
                  '-R', genome_fasta_path, 
-                 '-I', star_cor_bam, 
+                 '-I', args.input, 
                  '-O','output.vcf', 
                  '-L', bed_path,  
                  '--minimum-mapping-quality', '30', 
@@ -55,7 +55,8 @@ def main(args, outs):
             
     subprocess.check_call(gatk_args)
 
-# define the join        
+        
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
     
+    tk_io.combine_vcfs(outs.raw_variants, outs.output)
