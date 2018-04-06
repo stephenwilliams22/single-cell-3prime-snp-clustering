@@ -16,6 +16,7 @@ stage CALL_SNPS(
     in  bam    input,
     in  int    n_donors,
     out vcf[]  output,
+    out bam    output,
     src py     "stages/snpclust/call_snps_pd",
     in  path    bed_file,
 ) split using (
@@ -23,13 +24,15 @@ stage CALL_SNPS(
 )
 '''
 
-# split the .bed file and make chunks
+# define the split arguments. Using the .bed file and make chunks
 def split(args):
     loci = [x.split() for x in open(args.bed_file)]
     chunks = [{'locus': locus, '__mem_gb': 8} for locus in loci]
     return {'chunks': chunks}
 
-# define the reference 
+# define the main arguments
+# correct the mapq notation of the bam (from 255 to 60)
+# call the snps with GATK4
 def main(args, outs):
     genome_fasta_path = cr_utils.get_reference_genome_fasta(args.reference_path)
         
@@ -37,6 +40,7 @@ def main(args, outs):
     bed_path = martian.make_path('region.bed')
     with open(bed_path, 'w') as f:
         f.write(chrom+"\t"+str(start)+"\t"+str(stop)+"\n")
+
     
 # Run GATK4    
     gatk_args = ['gatk-launch', 'HaplotypeCaller', 
@@ -50,6 +54,7 @@ def main(args, outs):
                  '--add-output-vcf-command-line', 'false']
             
     subprocess.check_call(gatk_args)
+
         
 def join(args, outs, chunk_defs, chunk_outs):
     outs.output = [chunk.output for chunk in chunk_outs]
