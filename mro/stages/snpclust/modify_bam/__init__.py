@@ -54,3 +54,4 @@ def join(args, outs, chunk_defs, chunk_outs):
     outs.coerce_strings()
     # pass along every BAM produced
     outs.output_bams = [str(chunk.output) for chunk in chunk_outs]
+
