@@ -11,21 +11,20 @@ stage MODIFY_BAM(
     in  bam    input,
     in  path   reference_path,
     in  path    bed_file,
-    out bam    output,
+    out bam[]    output_bams,  # array of BAMs
     src py     "stages/snpclust/modify_bam",
 ) split (
     in  string locus,
 )
 
 stage FILTER_READS(
-    in  bam    input,
+    in  bam[]    input_bams,  # array of BAMs
     in  tsv    cell_barcodes,
     in  map    align,
     out bam    output,
     src py     "stages/snpclust/filter_reads",
 ) split using (
-    in  string chunk_start,
-    in  string chunk_end,
+    in bam input_bam,  # single BAM
 )
 
 stage CALL_SNPS(
