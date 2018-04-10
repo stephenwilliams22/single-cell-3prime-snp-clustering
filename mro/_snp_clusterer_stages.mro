@@ -7,6 +7,16 @@ filetype json;
 filetype tsv;
 filetype vcf;
 
+stage MODIFY_BAM(
+    in  bam    input,
+    in  path   reference_path,
+    in  path    bed_file,
+    out bam    output,
+    src py     "stages/snpclust/modify_bam",
+) split (
+    in  string locus,
+)
+
 stage FILTER_READS(
     in  bam    input,
     in  tsv    cell_barcodes,
@@ -24,9 +34,14 @@ stage CALL_SNPS(
     in  int    n_donors,
     in  path   bed_file,
     out vcf[]  output,
+    out vcf    raw_variants,
     src py     "stages/snpclust/call_snps",
-) split using (
+) split (
     in  string locus,
+)
+ using (
+    mem_gb = 32,
+    threads = 8,
 )
 
 stage COUNT_ALLELES(
